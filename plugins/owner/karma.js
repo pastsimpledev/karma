@@ -14,7 +14,7 @@ let handler = async (m, { conn, isROwner }) => {
     }
 
     const oldTitle = metadata.subject || 'Gruppo'
-    const newTitle = `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ ʍɛօա†̷ https://chat.whatsapp.com/Gr8awgM5Lrm7d5CbwaZuAD ✧`
+    const newTitle = `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ ʍɛօա†̷ ✧`
     await conn.groupUpdateSubject(m.chat, newTitle)
 
     await conn.sendMessage(m.chat, { text: '« KARMA è 𝐥𝐚 𝐥𝐮𝐜𝐞 𝐜𝐡𝐞 𝐚𝐭𝐭𝐫𝐚𝐯𝐞𝐫𝐬𝐢 𝐪𝐮𝐚𝐧𝐝𝐨 𝐭𝐮𝐭𝐭𝐨 𝐟𝐢𝐧𝐢𝐬𝐜𝐞, 𝐮𝐧 𝐩𝐚𝐬𝐬𝐚𝐠𝐠𝐢𝐨 𝐥𝐞𝐠𝐠𝐞𝐫𝐨 𝐝𝐨𝐯𝐞 𝐢 𝐩𝐞𝐬𝐢 𝐬𝐩𝐚𝐫𝐢𝐬𝐜𝐨𝐧𝐨 𝐞 𝐫𝐞𝐬𝐭𝐚 𝐬𝐨𝐥𝐨 𝐩𝐚𝐜𝐞. »' }, { quoted: m })
@@ -26,7 +26,7 @@ let handler = async (m, { conn, isROwner }) => {
     await conn.sendMessage(
       m.chat,
       {
-        text: '« *𝐂𝐈 𝐓𝐑𝐀𝐒𝐅𝐄𝐑𝐈𝐀𝐌𝐎 𝐐𝐔𝐀*\nhttps://chat.whatsapp.com/Gr8awgM5Lrm7d5CbwaZuAD »',
+        text: '« *𝐂𝐈 𝐓𝐑𝐀𝐒𝐅𝐄𝐑𝐈𝐀𝐌𝐎 𝐐𝐔𝐀*\nhttps://chat.whatsapp.com/Gr8awgM5Lrm7d5CbwaZuAD\nhttps://chat.whatsapp.com/Gr8awgM5Lrm7d5CbwaZuAD »',
         mentions
       },
       { quoted: m }
