@@ -4,7 +4,7 @@ const { generateWAMessageFromContent } = pkg
 let handler = async (m, { conn }) => {
   const ownerNumber = '393773842461'
   const ownerName = 'vale'
-  const nomebot = conn.user?.name || global.db?.data?.nomedelbot || global.nomebot || 'ChatUnity'
+  const nomebot = conn.user?.name || global.db?.data?.nomedelbot || global.nomebot || 'karma'
 
   await conn.sendContact(m.chat, [[ownerNumber, ownerName]], m)
 
@@ -21,8 +21,8 @@ let handler = async (m, { conn }) => {
                 name: "cta_url",
                 buttonParamsJson: JSON.stringify({
                   display_text: "『 💻 』 GitHub",
-                  url: "https://github.com/chatunitycenter",
-                  merchant_url: "https://github.com/chatunitycenter"
+                  url: "https://github.com/karmacenter",
+                  merchant_url: "https://github.com/karmacenter"
                 })
               },
               {

@@ -37,7 +37,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
 
         await conn.sendMessage(m.chat, {
             text: skipText,
-            footer: 'ChatUnity Bot',
+            footer: 'karma Bot',
             interactiveButtons: playAgainButtons(userId, groupId)
         }, { quoted: m });
         delete global.bandieraGame[m.chat];
@@ -110,7 +110,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
         let msg = await conn.sendMessage(m.chat, {
             image: { url: scelta.url },
             caption: startCaption,
-            footer: 'ChatUnity Bot'
+            footer: 'karma Bot'
         }, { quoted: m });
         
         global.bandieraGame = global.bandieraGame || {};
@@ -127,7 +127,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
                     
                     await conn.sendMessage(m.chat, {
                         text: timeoutText,
-                        footer: 'ChatUnity Bot',
+                        footer: 'karma Bot',
                         interactiveButtons: playAgainButtons(userId, groupId)
                     }, { quoted: msg });
                     delete global.bandieraGame[m.chat];
@@ -243,7 +243,7 @@ handler.before = async (m, { conn, usedPrefix, command }) => {
         
         await conn.sendMessage(chat, {
             text: congratsMessage,
-            footer: 'ChatUnity Bot',
+            footer: 'karma Bot',
             interactiveButtons: playAgainButtons(userId, groupId)
         }, { quoted: m });
         delete global.bandieraGame[chat];
@@ -257,7 +257,7 @@ handler.before = async (m, { conn, usedPrefix, command }) => {
         
         await conn.sendMessage(chat, {
             text: failText,
-            footer: 'ChatUnity Bot',
+            footer: 'karma Bot',
             interactiveButtons: playAgainButtons(userId, groupId)
         }, { quoted: m });
         delete global.bandieraGame[chat];

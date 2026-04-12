@@ -163,7 +163,7 @@ let handler = async (m, { conn }) => {
     next: xpToNext,
   });
 
-  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
 
   await conn.sendMessage(
     groupId,

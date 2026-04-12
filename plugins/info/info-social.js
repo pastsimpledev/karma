@@ -5,7 +5,7 @@ import '../../lib/language.js'
 async function handler(message, { conn, usedPrefix }) {
   const userId = message.sender
   const groupId = message.chat
-  const nomeDelBot = global.db.data.nomedelbot || 'ChatUnity'
+  const nomeDelBot = global.db.data.nomedelbot || 'karma'
 
   const requiredFiles = ['./CODE_OF_CONDUCT.md']
 
@@ -63,7 +63,7 @@ async function handler(message, { conn, usedPrefix }) {
           name: 'cta_url',
           buttonParamsJson: JSON.stringify({
             display_text: global.t('socialTiktokButton', userId, groupId),
-            url: 'https://tiktok.com/@chatunitycenter'
+            url: 'https://tiktok.com/@karmacenter'
           })
         }]
       },
@@ -76,7 +76,7 @@ async function handler(message, { conn, usedPrefix }) {
           name: 'cta_url',
           buttonParamsJson: JSON.stringify({
             display_text: global.t('socialYoutubeButton', userId, groupId),
-            url: 'https://youtube.com/chatunity'
+            url: 'https://youtube.com/karma'
           })
         }]
       },
@@ -102,7 +102,7 @@ async function handler(message, { conn, usedPrefix }) {
           name: 'cta_url',
           buttonParamsJson: JSON.stringify({
             display_text: global.t('socialTelegramButton', userId, groupId),
-            url: 'https://t.me/ChatUnityTG'
+            url: 'https://t.me/karmaTG'
           })
         }]
       },
@@ -115,7 +115,7 @@ async function handler(message, { conn, usedPrefix }) {
           name: 'cta_url',
           buttonParamsJson: JSON.stringify({
             display_text: global.t('socialInstagramButton', userId, groupId),
-            url: 'https://instagram.com/chatunity_'
+            url: 'https://instagram.com/karma_'
           })
         }]
       }

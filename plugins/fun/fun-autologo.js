@@ -85,7 +85,7 @@ let handler = async (m, { conn, isAdmin }) => {
                 type: 1
               }
             ],
-            footer: 'ChatUnity Bot'
+            footer: 'karma Bot'
           }, { quoted: m });
           delete global.logoGame[m.chat];
         }
@@ -139,7 +139,7 @@ handler.before = async (m, { conn }) => {
           type: 1
         }
       ],
-      footer: 'ChatUnity Bot'
+      footer: 'karma Bot'
     }, { quoted: m });
     
     delete global.logoGame[m.chat];

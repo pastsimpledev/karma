@@ -46,7 +46,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     await conn.sendMessage(m.chat, {
         text: message,
         buttons: buttons,
-        footer: 'ChatUnity Economy',
+        footer: 'karma Economy',
         mentions: [who],
         contextInfo: {
             externalAdReply: {

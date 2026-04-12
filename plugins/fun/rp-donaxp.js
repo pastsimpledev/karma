@@ -37,7 +37,7 @@ let handler = async (m, { conn, text }) => {
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363259442839354@newsletter',
           serverMessageId: '',
-          newsletterName: 'ChatUnity',
+          newsletterName: 'karma',
         },
       },
     },
@@ -54,7 +54,7 @@ let handler = async (m, { conn, text }) => {
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363259442839354@newsletter',
           serverMessageId: '',
-          newsletterName: 'ChatUnity',
+          newsletterName: 'karma',
         },
       },
     },

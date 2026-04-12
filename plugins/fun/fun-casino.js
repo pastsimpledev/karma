@@ -66,7 +66,7 @@ let handler = async (m, { conn, args, usedPrefix, command, DevMode }) => {
                     bot: Aku,
                     user: Kamu,
                     amount: formatNumber(count),
-                    botName: 'ChatUnity-Bot',
+                    botName: 'karma-Bot',
                     userName: username
                 }),
                 m
@@ -82,7 +82,7 @@ let handler = async (m, { conn, args, usedPrefix, command, DevMode }) => {
                     bot: Aku,
                     user: Kamu,
                     amount: formatNumber(count * 2),
-                    botName: 'ChatUnity-Bot',
+                    botName: 'karma-Bot',
                     userName: username
                 }),
                 m
@@ -98,7 +98,7 @@ let handler = async (m, { conn, args, usedPrefix, command, DevMode }) => {
                     bot: Aku,
                     user: Kamu,
                     amount: formatNumber(count * 1),
-                    botName: 'ChatUnity-Bot',
+                    botName: 'karma-Bot',
                     userName: username
                 }),
                 m

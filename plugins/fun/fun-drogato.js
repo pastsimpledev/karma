@@ -2,7 +2,7 @@
 let handler = async (m, { conn, command, text }) => {
   const userId = m.sender;
   const groupId = m.chat;
-  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
 
   const width = Math.floor(Math.random() * 101);
 

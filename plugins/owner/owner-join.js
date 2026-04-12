@@ -11,7 +11,7 @@ let handler = async (m, { conn, text, isOwner, usedPrefix, command }) => {
         return m.reply(global.t('joinInvalidLink', userId, groupId));
     }
     let res = await conn.groupAcceptInvite(code);
-    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
     if (expired === 'inf') {
         await conn.sendMessage(m.chat, {
             text: global.t('joinSuccessInfinite', userId, groupId),

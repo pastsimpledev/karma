@@ -279,7 +279,7 @@ Esempi multipli (solo per plugin):
         [`📎 Tutti File`, `${usedPrefix + command} ${basePluginString} file`]
       ]
       
-      return await conn.sendButton(m.chat, info, 'ChatUnity x 333 Multi Plugin Manager', null, buttons, m)
+      return await conn.sendButton(m.chat, info, 'karma x 333 Multi Plugin Manager', null, buttons, m)
     }
     
     let successCount = 0;
@@ -359,7 +359,7 @@ Esempi multipli (solo per plugin):
       [`📎 File`, `${usedPrefix + command} ${text} file`]
     ]
     
-    return await conn.sendButton(m.chat, info, 'ChatUnity x 333 Manager', null, buttons, m)
+    return await conn.sendButton(m.chat, info, 'karma x 333 Manager', null, buttons, m)
   }
 
   const option = args[1].toLowerCase()
@@ -436,7 +436,7 @@ Esempi multipli (solo per plugin):
 }
 
 async function processFile(pathFile, filename, option, isPlugin, m, conn, index = null) {
-  const header = "//Plugin fatto da Gabs333 x Staff ChatUnity\n"
+  const header = "//Plugin fatto da Gabs333 x Staff karma\n"
   const prefix = index ? `[${index}] ` : '';
   
   try {

@@ -7,7 +7,7 @@ const lenguajeIT = {
   }
   
   let handler = async (m, { conn, args, text }) => {
-    const pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || './media/chatunitybot.mp4'
+    const pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || './media/karmabot.mp4'
     
     if (!text) return conn.reply(m.chat, lenguajeIT.smsNam2(), fkontak, m)
     

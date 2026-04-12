@@ -3,7 +3,7 @@
 let handler = async (m, { conn, text }) => {
     const userId = m.sender;
     const groupId = m.chat;
-    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
     
     try {
         await conn.sendMessage(m.chat, {

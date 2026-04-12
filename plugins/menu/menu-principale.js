@@ -12,7 +12,7 @@ const handler = async (message, { conn, usedPrefix, command }) => {
     const groupId = message.isGroup ? message.chat : null;
     
     const userCount = Object.keys(global.db.data.users).length;
-    const botName = global.db.data.nomedelbot || 'ChatUnity';
+    const botName = global.db.data.nomedelbot || 'karma';
 
     const menuText = generateMenuText(usedPrefix, botName, userCount, userId, groupId);
 
@@ -92,7 +92,7 @@ function generateMenuText(prefix, botName, userCount, userId, groupId) {
 ୧ 🚀 ୭ *${prefix}${pingText}*
 ୧ 📝 ୭ *${prefix}${reportText}* 
 ୧ 💡 ୭ *${prefix}${suggestText}*
-୧ 🤖 ୭ *${prefix}chatunity*
+୧ 🤖 ୭ *${prefix}karma*
 ୧ 🤖 ୭ *${prefix}lingua*
 
 ୧・*${versionText}:* ${vs}

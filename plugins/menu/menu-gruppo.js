@@ -64,7 +64,7 @@ export default handler;
 
 function generateMenuText(prefix, userId, groupId) {
     const vs = global.vs || '8.0';
-    const collab = global.collab || 'ChatUnity x 333';
+    const collab = global.collab || 'karma x 333';
     const menuTitle = global.t('groupMenuTitle', userId, groupId);
     
     const createSection = (title, commands) => {

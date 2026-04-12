@@ -28,7 +28,7 @@ let handler = async (m, { conn, text, command, usedPrefix }) => {
                         { buttonId: `${usedPrefix}${command} testa`, buttonText: { displayText: global.t('cfButtonHeads', userId, groupId) }, type: 1 },
                         { buttonId: `${usedPrefix}${command} croce`, buttonText: { displayText: global.t('cfButtonTails', userId, groupId) }, type: 1 }
                     ],
-                    footer: '🎮 ChatUnity Coin Flip',
+                    footer: '🎮 karma Coin Flip',
                     mentions: [m.sender]
                 }, { quoted: m });
             }
@@ -50,7 +50,7 @@ let handler = async (m, { conn, text, command, usedPrefix }) => {
                     { buttonId: `${usedPrefix}${command} testa`, buttonText: { displayText: global.t('cfButtonHeads', userId, groupId) }, type: 1 },
                     { buttonId: `${usedPrefix}${command} croce`, buttonText: { displayText: global.t('cfButtonTails', userId, groupId) }, type: 1 }
                 ],
-                footer: '🎮 ChatUnity Coin Flip',
+                footer: '🎮 karma Coin Flip',
                 mentions: [m.sender]
             }, { quoted: m });
         } else {
@@ -101,7 +101,7 @@ let handler = async (m, { conn, text, command, usedPrefix }) => {
                         command
                     }),
                     mentions: [session.player1, session.player2],
-                    footer: '🎮 ChatUnity Coin Flip'
+                    footer: '🎮 karma Coin Flip'
                 }, { quoted: m });
 
                 cooldowns[session.player1] = Date.now();

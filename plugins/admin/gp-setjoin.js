@@ -2,7 +2,7 @@
 let handler = async (m, { conn, text, isROwner, isOwner, command }) => {
     const userId = m.sender;
     const groupId = m.isGroup ? m.chat : null;
-    const nomeDelBot = global.db.data.nomedelbot || 'ChatUnity';
+    const nomeDelBot = global.db.data.nomedelbot || 'karma';
     
     const isWelcome = /^(setwelcome|setbenvenuto|setbienvenida|setboasvindas|setwillkommen|setbienvenue|设置欢迎|добро пожаловать|ترحيب|स्वागत|selamatdatang|hoşgeldin)$/i.test(command);
     

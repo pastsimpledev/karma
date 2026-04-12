@@ -20,7 +20,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     forwardedNewsletterMessageInfo: {
         newsletterJid: '120363259442839354@newsletter',
         serverMessageId: 100,
-        newsletterName: `𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭 ✦ Sticker`
+        newsletterName: `karma ✦ Sticker`
     }
   }
 

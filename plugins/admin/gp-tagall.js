@@ -4,7 +4,7 @@ let handler = async (m, { isOwner, isAdmin, conn, text, participants, args }) =>
     
     const userId = m.sender;
     const groupId = m.isGroup ? m.chat : null;
-    const nomeDelBot = global.db.data.nomedelbot || 'ChatUnity';
+    const nomeDelBot = global.db.data.nomedelbot || 'karma';
     
     const title = global.t('tagallTitle', userId, groupId);
     const botLabel = global.t('tagallBot', userId, groupId);

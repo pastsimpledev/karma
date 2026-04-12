@@ -3,7 +3,7 @@
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   const userId = m.sender;
   const groupId = m.chat;
-  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
   
   if (!text) throw global.t('saveNoName', userId, groupId);
   if (!m.quoted?.text) throw global.t('saveNoQuoted', userId, groupId);

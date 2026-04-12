@@ -150,7 +150,7 @@ function findBestMatches(input, allFiles, threshold = 0.2, maxResults = 5) {
 let handler = async (m, { conn, text, usedPrefix, command, __dirname }) => {
   const userId = m.sender;
   const groupId = m.chat;
-  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
   
   const availablePlugins = Object.keys(plugins);
   const pluginNames = availablePlugins.map(plugin => plugin.replace('.js', ''));
@@ -306,7 +306,7 @@ handler.before = async (m, { conn }) => {
   if (m.sender !== global.deletePluginData.sender) return;
   const userId = m.sender;
   const groupId = m.chat;
-  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+  const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
   const response = m.text.toLowerCase().trim();
   
   if (global.deletePluginData.isMultipleChoice) {

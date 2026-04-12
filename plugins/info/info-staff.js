@@ -1,14 +1,14 @@
 //plugin by Giuse
 let handler = async (m, { conn }) => {
 
-    // Newsletter globale ChatUnity
+    // Newsletter globale karma
     const cuContext = {
         isForwarded: true,
         forwardingScore: 999,
         forwardedNewsletterMessageInfo: {
             newsletterJid: '120363259442839354@newsletter',
             serverMessageId: 100,
-            newsletterName: `𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭 ✦ Staff Ufficiale`
+            newsletterName: `karma ✦ Staff Ufficiale`
         }
     };
 
@@ -22,7 +22,7 @@ let handler = async (m, { conn }) => {
 
     // Testo elegante con i numeri in chiaro
     let testo = `
-୧・︶ ✦ 𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭 ✦ ︶・୨
+୧・︶ ✦ karma ✦ ︶・୨
 ꒷꒦ ‧₊ 🛡️ 𝐒 𝐓 𝐀 𝐅 𝐅 🛡️ ₊‧ ꒷꒦
 ୧・︶ : ︶ : ︶ : ︶ : ︶ : ︶・୨
 

@@ -89,7 +89,7 @@ let handler = async (m, { conn, isOwner }) => {
         userList = `┊ 『 ✅ 』 ${global.t('listawarnNoWarns', userId, groupId)}\n┊\n`;
     }
 
-    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
     let caption = `╭★────★────★
 ┊ㅤㅤ${global.t('listawarnTitle', userId, groupId)}
 ┊

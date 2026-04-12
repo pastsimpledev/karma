@@ -47,11 +47,11 @@ let handler = async (m, { conn, usedPrefix }) => {
         image: { url: 'media/cubank.jpg' },
         caption: message,
         buttons: buttons.length > 0 ? buttons : undefined,
-        footer: 'ChatUnity Bank',
+        footer: 'karma Bank',
         mentions: [who],
         contextInfo: {
             externalAdReply: {
-                title: '🏛️ ChatUnity Bank',
+                title: '🏛️ karma Bank',
                 body: `Saldo: ${balance} UC`,
                 thumbnailUrl: 'https://i.ibb.co/bank-icon.png',
                 mediaType: 1,

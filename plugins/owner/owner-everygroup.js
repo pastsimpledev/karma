@@ -2,7 +2,7 @@
 let handler = async (m, { conn, isOwner, text }) => {
     const userId = m.sender;
     const groupId = m.chat;
-    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'ChatUnity';
+    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
     
     if (!isOwner) {
         return conn.sendMessage(m.chat, {
