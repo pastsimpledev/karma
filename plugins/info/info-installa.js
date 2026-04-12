@@ -88,7 +88,7 @@ ${cta}
                 title: '𝙸𝙽𝙵𝙾 𝙳𝙴𝙻 𝙱𝙾𝚃',
                 body: 'karma',
                 previewType: 0,
-                thumbnail: fs.readFileSync("./media/principale.jpeg"),
+                thumbnail: fs.readFileSync("./media/karma.jpeg"),
                 sourceUrl: `https://github.com/karmacenter/karma-bot`
             }
         }

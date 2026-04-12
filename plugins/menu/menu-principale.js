@@ -16,7 +16,7 @@ const handler = async (message, { conn, usedPrefix, command }) => {
 
     const menuText = generateMenuText(usedPrefix, botName, userCount, userId, groupId);
 
-    const photopath = path.join(__dirname, '../../media/principale.jpeg'); 
+    const photopath = path.join(__dirname, '../../media/karma.jpeg'); 
     
     const footerText = global.t('menuFooter', userId, groupId);
     const adminMenuText = global.t('menuAdmin', userId, groupId);

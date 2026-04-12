@@ -8,7 +8,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     const userId = m.sender;
     const groupId = m.isGroup ? m.chat : null;
     const chat = global.db.data.chats[m.chat] || {};
-    const imagePath = path.join(__dirname, '../../media/sicurezza.jpeg');
+    const imagePath = path.join(__dirname, '../../media/karma.jpeg');
 
     const menuText = generateMenuText(chat, userId, groupId);
     const footerText = global.t('chooseMenu', userId, groupId) || 'Scegli un menu:';
