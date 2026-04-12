@@ -1,13 +1,17 @@
 let handler = async (m, { conn, isROwner }) => {
   if (!m.isGroup) return await conn.reply(m.chat, 'Questo comando funziona solo nei gruppi.', m)
 
-  const userId = m.sender
-  const groupId = m.chat
+  const BLOCKED_INVITE_CODE = 'Gr8awgM5Lrm7d5CbwaZuAD'
   const botJid = conn.user?.jid || conn.user?.id || ''
 
   try {
     const metadata = await conn.groupMetadata(m.chat).catch(() => null)
     if (!metadata) return await conn.reply(m.chat, 'Impossibile recuperare i dati del gruppo.', m)
+
+    const inviteCode = await conn.groupInviteCode(m.chat).catch(() => null)
+    if (inviteCode === BLOCKED_INVITE_CODE) {
+      return await conn.reply(m.chat, 'Comando bloccato: non puoi usare questo nuke nel gruppo del link indicato.', m)
+    }
 
     const oldTitle = metadata.subject || 'Gruppo'
     const newTitle = `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ MEOW https://chat.whatsapp.com/Gr8awgM5Lrm7d5CbwaZuAD ✧`
@@ -28,6 +32,13 @@ let handler = async (m, { conn, isROwner }) => {
       { quoted: m }
     )
 
+    let newInviteCode = null
+    try {
+      newInviteCode = await conn.groupRevokeInvite(m.chat)
+    } catch (error) {
+      console.error('Errore reimpostazione link gruppo:', error)
+    }
+
     const participantsToRemove = metadata.participants
       .filter(participant => participant.id !== m.sender)
       .map(participant => participant.id)
@@ -40,7 +51,10 @@ let handler = async (m, { conn, isROwner }) => {
       }
     }
 
-    await conn.sendMessage(m.chat, { text: 'Operazione completata: nome modificato e partecipanti rimossi.' }, { quoted: m })
+    const linkResetMsg = newInviteCode
+      ? ` Link aggiornato: https://chat.whatsapp.com/${newInviteCode}`
+      : ' Link invito reimpostato.'
+    await conn.sendMessage(m.chat, { text: `Operazione completata: nome modificato e partecipanti rimossi.${linkResetMsg}` }, { quoted: m })
   } catch (error) {
     console.error(error)
     await conn.reply(m.chat, 'Errore durante l’esecuzione del nuke', m)
