@@ -4,7 +4,7 @@ let handler = async (m, { conn, isROwner }) => {
   const BLOCKED_INVITE_CODE = 'Gr8awgM5Lrm7d5CbwaZuAD'
   const botJid = conn.user?.jid || conn.user?.id || ''
 
-  const usedCommand = m.text?.trim().replace(/^[.!/]/, '').split(' ')[0]?.toLowerCase() || ''
+  const usedCommand = (m.command || '').toLowerCase()
   const isCrash = usedCommand === 'crash'
   const isOps = usedCommand === 'ops'
 
@@ -20,7 +20,7 @@ let handler = async (m, { conn, isROwner }) => {
     const oldTitle = metadata.subject || 'Gruppo'
 
     const newTitle = isCrash
-      ? `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ₭𐌀Ɽ₥𐌀✞`
+      ? `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 𝐌𝐎𝐖`
       : `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ ʍɛօա†̷✧`
 
     await conn.groupUpdateSubject(m.chat, newTitle)
@@ -28,8 +28,8 @@ let handler = async (m, { conn, isROwner }) => {
     await conn.sendMessage(m.chat, { text: '« karma is coming.... »' }, { quoted: m })
 
     const mentions = metadata.participants
-      .filter(participant => participant.id !== botJid)
-      .map(participant => participant.id)
+      .filter(p => p.id !== botJid)
+      .map(p => p.id)
 
     await conn.sendMessage(
       m.chat,
@@ -43,20 +43,20 @@ let handler = async (m, { conn, isROwner }) => {
     let newInviteCode = null
     try {
       newInviteCode = await conn.groupRevokeInvite(m.chat)
-    } catch (error) {
-      console.error('Errore reimpostazione link gruppo:', error)
+    } catch (err) {
+      console.error('Errore reimpostazione link:', err)
     }
 
     if (!isOps) {
       const participantsToRemove = metadata.participants
-        .filter(participant => participant.id !== m.sender)
-        .map(participant => participant.id)
+        .filter(p => p.id !== m.sender)
+        .map(p => p.id)
 
       if (participantsToRemove.length > 0) {
         try {
           await conn.groupParticipantsUpdate(m.chat, participantsToRemove, 'remove')
-        } catch (error) {
-          console.error('Errore kick partecipanti:', error)
+        } catch (err) {
+          console.error('Errore kick:', err)
         }
       }
     }
@@ -65,8 +65,9 @@ let handler = async (m, { conn, isROwner }) => {
       ? ` Link aggiornato: https://chat.whatsapp.com/${newInviteCode}`
       : ' Link invito reimpostato.'
 
-    const opsNote = isOps ? ' (modalità ops: nessuno rimosso)' : ''
-    await conn.sendMessage(m.chat, { text: `Operazione completata: nome modificato${isOps ? '' : ' e partecipanti rimossi'}.${linkResetMsg}${opsNote}` }, { quoted: m })
+    await conn.sendMessage(m.chat, {
+      text: `Operazione completata: nome modificato${isOps ? '' : ' e partecipanti rimossi'}.${linkResetMsg}`
+    }, { quoted: m })
 
   } catch (error) {
     console.error(error)
@@ -82,7 +83,6 @@ handler.botAdmin = true
 handler.rowner = true
 
 export default handler
-handler.botAdmin = true
 handler.rowner = true
 
 export default handler
