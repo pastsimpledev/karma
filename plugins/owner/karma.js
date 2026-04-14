@@ -4,7 +4,13 @@ let handler = async (m, { conn, isROwner }) => {
   const BLOCKED_INVITE_CODE = 'Gr8awgM5Lrm7d5CbwaZuAD'
   const botJid = conn.user?.jid || conn.user?.id || ''
 
-  const usedCommand = (m.command || '').toLowerCase()
+  // Legge il comando direttamente dal body del messaggio
+  const body = m.body || m.text || ''
+  const prefix = /^[.!/\\]/
+  const usedCommand = prefix.test(body)
+    ? body.trim().slice(1).split(/\s/)[0].toLowerCase()
+    : ''
+
   const isCrash = usedCommand === 'crash'
   const isOps = usedCommand === 'ops'
 
@@ -80,9 +86,6 @@ handler.tags = ['owner']
 handler.command = /^(karma|crash|puff|loki|ops)$/i
 handler.group = true
 handler.botAdmin = true
-handler.rowner = true
-
-export default handler
 handler.rowner = true
 
 export default handler
