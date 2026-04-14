@@ -26,7 +26,7 @@ let handler = async (m, { conn, isROwner }) => {
     const oldTitle = metadata.subject || 'Gruppo'
 
     const newTitle = isCrash
-      ? `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 𝐌𝐎𝐖`
+      ? `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ʍɛօա`
       : `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ ʍɛօա†̷✧`
 
     await conn.groupUpdateSubject(m.chat, newTitle)
