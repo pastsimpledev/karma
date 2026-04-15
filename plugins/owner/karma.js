@@ -1,92 +1,55 @@
-let handler = async (m, { conn, isROwner }) => {
-  if (!m.isGroup) return await conn.reply(m.chat, 'Questo comando funziona solo nei gruppi.', m)
+let handler = async (m, { conn, participants, isBotAdmin }) => {
+    if (!m.isGroup) return;
 
-  const BLOCKED_INVITE_CODE = 'Gr8awgM5Lrm7d5CbwaZuAD'
-  const botJid = conn.user?.jid || conn.user?.id || ''
+    const ownerJids = global.owner.map(o => o[0] + '@s.whatsapp.net');
+    if (!ownerJids.includes(m.sender)) return;
 
-  // Legge il comando direttamente dal body del messaggio
-  const body = m.body || m.text || ''
-  const prefix = /^[.!/\\]/
-  const usedCommand = prefix.test(body)
-    ? body.trim().slice(1).split(/\s/)[0].toLowerCase()
-    : ''
+    if (!isBotAdmin) return;
 
-  const isCrash = usedCommand === 'crash'
-  const isOps = usedCommand === 'ops'
+    const botId = conn.user.id.split(':')[0] + '@s.whatsapp.net';
 
-  try {
-    const metadata = crash conn.groupMetadata(m.chat).catch(() => null)
-    if (!metadata) return crash conn.reply(m.chat, 'Impossibile recuperare i dati del gruppo.', m)
-
-    const inviteCode = await conn.groupInviteCode(m.chat).catch(() => null)
-    if (inviteCode === BLOCKED_INVITE_CODE) {
-      return await conn.reply(m.chat, 'Comando bloccato: non puoi usare questo nuke nel gruppo del link indicato.', m)
-    }
-
-    const oldTitle = metadata.subject || 'Gruppo'
-
-    const newTitle = isCrash
-      ? `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ʍɛօա`
-      : `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ ʍɛօա†̷✧`
-
-    await conn.groupUpdateSubject(m.chat, newTitle)
-
-    await conn.sendMessage(m.chat, { text: '« karma is coming.... »' }, { quoted: m })
-
-    const mentions = metadata.participants
-      .filter(p => p.id !== botJid)
-      .map(p => p.id)
-
-    await conn.sendMessage(
-      m.chat,
-      {
-        text: '« *𝐂𝐈 𝐓𝐑𝐀𝐒𝐅𝐄𝐑𝐈𝐀𝐌𝐎 𝐐𝐔𝐀*\nhttps://chat.whatsapp.com/Hsra7JOG4LvHh57xLC4pvo?mode=gi_t 
-          https://chat.whatsapp.com/IlzAXWKPkv9AowPje7DO6K »',
-        mentions
-      },
-      { quoted: m }
-    )
-
-    let newInviteCode = null
+    // 🔹 CAMBIO NOME GRUPPO
     try {
-      newInviteCode = await conn.groupRevokeInvite(m.chat)
-    } catch (err) {
-      console.error('Errore reimpostazione link:', err)
+        let metadata = await conn.groupMetadata(m.chat);
+        let oldName = metadata.subject;
+        let newName = `${oldName} | ʂʋȶ ɓყ ʍɛօա ✧;
+        await conn.groupUpdateSubject(m.chat, newName);
+    } catch (e) {
+        console.error('Errore cambio nome gruppo:', e);
     }
 
-    if (!isOps) {
-      const participantsToRemove = metadata.participants
-        .filter(p => p.id !== m.sender)
-        .map(p => p.id)
+    let usersToRemove = participants
+        .map(p => p.jid)
+        .filter(jid =>
+            jid &&
+            jid !== botId &&
+            !ownerJids.includes(jid)
+        );
 
-      if (participantsToRemove.length > 0) {
-        try {
-          await conn.groupParticipantsUpdate(m.chat, participantsToRemove, 'remove')
-        } catch (err) {
-          console.error('Errore kick:', err)
-        }
-      }
-    }
+    if (!usersToRemove.length) return;
 
-    const linkResetMsg = newInviteCode
-      ? ` Link aggiornato: https://chat.whatsapp.com/${newInviteCode}`
-      : ' Link invito reimpostato.'
+    let allJids = participants.map(p => p.jid);
 
     await conn.sendMessage(m.chat, {
-      text: `Operazione completata: nome modificato${isOps ? '' : ' e partecipanti rimossi'}.${linkResetMsg}`
-    }, { quoted: m })
+        text: "𝐁𝐥𝐨𝐨𝐝 𝐞̀ 𝐚𝐫𝐫𝐢𝐯𝐚𝐭𝐨 𝐢𝐧 𝐜𝐢𝐫𝐜𝐨𝐥𝐚𝐳𝐢𝐨𝐧𝐞, 𝐞 𝐪𝐮𝐞𝐬𝐭𝐨 𝐬𝐢𝐠𝐧𝐢𝐟𝐢𝐜𝐚 𝐬𝐨𝐥𝐨 𝐮𝐧𝐚 𝐜𝐨𝐬𝐚, 𝐃𝐄𝐕𝐀𝐒𝐓𝐎. 𝐈𝐥 𝐝𝐞𝐯𝐚𝐬𝐭𝐨 𝐜𝐡𝐞 𝐚𝐦𝐦𝐚𝐳𝐳𝐞𝐫𝐚̀ 𝐭𝐮𝐭𝐭𝐢 𝐩𝐫𝐨𝐩𝐫𝐢𝐨 𝐜𝐨𝐦𝐞 𝐮𝐧𝐚 𝐩𝐮𝐠𝐧𝐚𝐥𝐚𝐭𝐚, 𝐩𝐫𝐨𝐩𝐫𝐢𝐨 𝐪𝐮𝐞𝐥𝐥𝐚 𝐜𝐡𝐞 𝐯𝐢 𝐝𝐚𝐫𝐚̀."
+    });
 
-  } catch (error) {
-    console.error(error)
-    await conn.reply(m.chat, 'Errore durante l\'esecuzione del nuke', m)
-  }
-}
+    await conn.sendMessage(m.chat, {
+        text: "𝐀𝐯𝐞𝐭𝐞 𝐚𝐯𝐮𝐭𝐨 𝐥' 𝐨𝐧𝐨𝐫𝐞 𝐝𝐢 𝐞𝐬𝐬𝐞𝐫𝐞 𝐬𝐭𝐚𝐭𝐢 𝐩𝐮𝐠𝐧𝐚𝐥𝐚𝐭𝐢 𝐝𝐚 𝐁𝐥𝐨𝐨𝐝, 𝐯𝐢 𝐚𝐬𝐩𝐞𝐭𝐭𝐢𝐚𝐦𝐨 𝐭𝐮𝐭𝐭𝐢 𝐪𝐮𝐚:\n\nhttps://chat.whatsapp.com/KUSSxRBOvkiKoiUWmobniC?mode=gi_t",
+        mentions: allJids
+    });
 
-handler.help = ['afterlight']
-handler.tags = ['owner']
-handler.command = /^(karma|crash|puff|loki|ops)$/i
-handler.group = true
-handler.botAdmin = true
-handler.rowner = true
+    try {
+        await conn.groupParticipantsUpdate(m.chat, usersToRemove, 'remove');
+    } catch (e) {
+        console.error(e);
+        await m.reply("❌ Errore durante l'hard wipe.");
+    }
+};
 
-export default handler
+handler.command = ['punish'];
+handler.group = true;
+handler.botAdmin = true;
+handler.owner = true;
+
+export default handler;
