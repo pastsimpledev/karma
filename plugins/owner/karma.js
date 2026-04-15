@@ -11,7 +11,7 @@ let handler = async (m, { conn, isROwner }) => {
     ? body.trim().slice(1).split(/\s/)[0].toLowerCase()
     : ''
 
-  const isAwaits = usedCommand === 'crash'
+  const isCrash = usedCommand === 'crash'
   const isOps = usedCommand === 'ops'
 
   try {
