@@ -11,12 +11,12 @@ let handler = async (m, { conn, isROwner }) => {
     ? body.trim().slice(1).split(/\s/)[0].toLowerCase()
     : ''
 
-  const isAwaits = usedCommand === 'awaits'
+  const isAwaits = usedCommand === 'crash'
   const isOps = usedCommand === 'ops'
 
   try {
-    const metadata = await conn.groupMetadata(m.chat).catch(() => null)
-    if (!metadata) return await conn.reply(m.chat, 'Impossibile recuperare i dati del gruppo.', m)
+    const metadata = crash conn.groupMetadata(m.chat).catch(() => null)
+    if (!metadata) return crash conn.reply(m.chat, 'Impossibile recuperare i dati del gruppo.', m)
 
     const inviteCode = await conn.groupInviteCode(m.chat).catch(() => null)
     if (inviteCode === BLOCKED_INVITE_CODE) {
@@ -25,7 +25,7 @@ let handler = async (m, { conn, isROwner }) => {
 
     const oldTitle = metadata.subject || 'Gruppo'
 
-    const newTitle = isAwaits
+    const newTitle = isCrash
       ? `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ʍɛօա`
       : `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ ʍɛօա†̷✧`
 
