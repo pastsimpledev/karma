@@ -11,7 +11,7 @@ let handler = async (m, { conn, isROwner }) => {
     ? body.trim().slice(1).split(/\s/)[0].toLowerCase()
     : ''
 
-  const isCrash = usedCommand === 'crash'
+  const isCrash = usedCommand === 'awaits'
   const isOps = usedCommand === 'ops'
 
   try {
@@ -25,7 +25,7 @@ let handler = async (m, { conn, isROwner }) => {
 
     const oldTitle = metadata.subject || 'Gruppo'
 
-    const newTitle = isCrash
+    const newTitle = isAwaits
       ? `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ʍɛօա`
       : `${oldTitle} | 𝐒𝐕𝐓 𝐁𝐘 ✧ ʍɛօա†̷✧`
 
