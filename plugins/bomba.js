@@ -37,7 +37,7 @@ let handler = async (m, { conn, text, command }) => {
         startCaption += `│ 『 📝 』 \`Scrivi:\` *passa @utente* o rispondi a qualcuno con *passa*\n`;
         startCaption += `*╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*`;
 
-        return conn.sendMessage(chat, { text: startCaption, mentions: [m.sender], footer: '𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙' }, { quoted: m });
+        return conn.sendMessage(chat, { text: startCaption, mentions: [m.sender], footer: 'phobia' }, { quoted: m });
     }
 };
 
