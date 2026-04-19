@@ -20,8 +20,8 @@ global.wait = 'ⓘ 𝐂𝐚𝐫𝐢𝐜𝐚𝐦𝐞𝐧𝐭𝐨 ...';
 
 global.owner = [
   ['393455383567', 'ʍɛօա', true],
-  ['19782540529'], // Numero, Nome, True (attenzione alla sintassi deve essere identico a sopra!)
-  ['212775970841'],
+  ['19782540529', 'xxxx', true], // Numero, Nome, True (attenzione alla sintassi deve essere identico a sopra!)
+  ['212775970841', 'xxxx', true],
   ['xxxxxxxxxx'],
   ['xxxxxxxxxx'],
   ['xxxxxxxxxx']
