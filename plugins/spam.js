@@ -34,9 +34,10 @@ let handler = async (m, { conn, text, usedPrefix, command, participants }) => {
 }
 
 handler.help = ['spam [testo]']
-handler.tags = ['owner']
+handler.tags = ['strumenti']
 handler.command = /^spam$/i
 handler.group = true // Forza l'uso solo nei gruppi
 handler.register = true 
+handler.owner = true 
 
 export default handler
