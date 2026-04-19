@@ -1,88 +1,68 @@
-import { cpus as _cpus, totalmem, freemem } from 'os'
-import { performance } from 'perf_hooks'
-import { sizeFormatter } from 'human-readable'
-import fs from 'fs'
-import path from 'path'
+import speed from 'performance-now'
 
-let format = sizeFormatter({
-  std: 'JEDEC',
-  decimalPlaces: 2,
-  keepTrailingZeroes: false,
-  render: (literal, symbol) => `${literal} ${symbol}B`,
-})
-
-let handler = async (m, { conn, usedPrefix, command }) => {
-  const userId = m.sender
-  const groupId = m.isGroup ? m.chat : null
-
-  let nomeDelBot = global.db.data.nomedelbot || `𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲`
-  let versioneBot = `${vs}`
-  let old = performance.now()
-  let neww = performance.now()
-  let speed = (neww - old).toFixed(2)
-  let uptime = process.uptime() * 1000
-
-  const cpus = _cpus().map(cpu => {
-    cpu.total = Object.keys(cpu.times).reduce((last, type) => last + cpu.times[type], 0)
-    return cpu
-  })
-
-  const cpu = cpus.reduce((last, cpu, _, { length }) => {
-    last.total += cpu.total
-    last.speed += cpu.speed / length
-    last.times.user += cpu.times.user
-    last.times.nice += cpu.times.nice
-    last.times.sys += cpu.times.sys
-    last.times.idle += cpu.times.idle
-    last.times.irq += cpu.times.irq
-    return last
-  }, {
-    speed: 0,
-    total: 0,
-    times: { user: 0, nice: 0, sys: 0, idle: 0, irq: 0 }
-  })
-
-  let cpuModel = cpus[0]?.model || 'Unknown Model'
-  let cpuSpeed = cpu.speed.toFixed(2)
-
-  let caption = global.t('systemStatus', userId, groupId, {
-    title: global.t('systemStatusTitle', userId, groupId),
-    uptime: clockString(uptime),
-    ping: speed,
-    cpuModel,
-    cpuSpeed,
-    ramUsed: format(totalmem() - freemem()),
-    ramTotal: format(totalmem()),
-    ramFree: format(freemem())
-  })
-
-  const videoPath = path.join(process.cwd(), 'media', 'gif', 'pong.mp4')
-
+let handler = async (m, { conn, usedPrefix }) => {
   try {
-    const videoBuffer = fs.readFileSync(videoPath)
+
+    let start = speed()
+    await conn.readMessages([m.key])
+    let end = speed()
+    let latency = (end - start).toFixed(2)
+
+    const uptimeMs = process.uptime() * 1000
+    const uptimeStr = clockString(uptimeMs)
+
+    const botStartTime = new Date(Date.now() - uptimeMs)
+    const activationTime = botStartTime.toLocaleString('it-IT', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    })
+
+    const message = `
+╭━━━━━━•✦•━━━━━━╮
+                  𝑷𝑰𝑵𝑮
+            Ƒ𐌄𐌀Ɽ
+╰━━━━━━•✦•━━━━━━╯
+
+𝑼𝒑𝒕𝒊𝒎𝒆: ${uptimeStr}
+𝑳𝒂𝒕𝒆𝒏𝒛𝒂: ${latency} ms
+𝑨𝒗𝒗𝒊𝒐: ${activationTime}
+
+╭━━━━━━•✦•━━━━━━╮
+   𝑶𝒘𝒏𝒆𝒓: ɱɛơա
+   𝑺𝒕𝒂𝒕𝒐: _Online_
+╰━━━━━━•✦•━━━━━━╯
+`.trim()
+
     await conn.sendMessage(m.chat, {
-      video: videoBuffer,
-      gifPlayback: true,
-      mimetype: 'video/mp4',
-      caption
-    }, { quoted: m })
+      text: message,
+      footer: `𝐏𝐢𝐧𝐠 ${nomebot}`,
+      buttons: [
+        { buttonId: `${usedPrefix}ping`, buttonText: { displayText: "🔄 𝐏𝐢𝐧𝐠" }, type: 1 }
+      ],
+      headerType: 1
+    })
+
   } catch (e) {
-    console.error('GIF pong error:', e.message, '| path:', videoPath)
-    await conn.sendMessage(m.chat, { text: caption }, { quoted: m })
+    console.error(e)
   }
 }
 
-handler.help = [
-  'ping', 'speed', 'velocità', 'latencia', 'velocidad', 'velocidade',
-  'geschwindigkeit', 'latenz', '速度', '延迟', 'скорость', 'задержка',
-  'سرعة', 'كمون', 'गति', 'विलंब', 'vitesse', 'latence',
-  'kecepatan', 'latensi', 'hız', 'gecikme'
-]
-handler.tags = ['info', 'tools']
-handler.command = /^(ping|speed|velocità|latencia|velocidad|velocidade|geschwindigkeit|latenz|速度|延迟|скорость|задержка|سرعة|كمون|गति|विलंब|vitesse|latence|kecepatan|latensi|hız|gecikme)$/i
+function clockString(ms) {
+  let h = Math.floor(ms / 3600000)
+  let m = Math.floor((ms % 3600000) / 60000)
+  let s = Math.floor((ms % 60000) / 1000)
+  return [h, m, s].map(v => v.toString().padStart(2, '0')).join(':')
+}
+
+handler.help = ['ping']
+handler.tags = ['info']
+handler.command = /^(ping)$/i
 
 export default handler
-
 function clockString(ms) {
   let d = Math.floor(ms / 86400000)
   let h = Math.floor(ms / 3600000) % 24
