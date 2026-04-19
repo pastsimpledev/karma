@@ -63,10 +63,3 @@ handler.tags = ['info']
 handler.command = /^(ping)$/i
 
 export default handler
-function clockString(ms) {
-  let d = Math.floor(ms / 86400000)
-  let h = Math.floor(ms / 3600000) % 24
-  let m = Math.floor(ms / 60000) % 60
-  let s = Math.floor(ms / 1000) % 60
-  return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}
