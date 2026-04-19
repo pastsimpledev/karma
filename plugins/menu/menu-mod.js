@@ -9,7 +9,7 @@ const handler = async (message, { conn, usedPrefix, command }) => {
     const groupId = message.isGroup ? message.chat : null;
 
     const menuText = generateMenuText(usedPrefix, userId, groupId);
-    const imagePath = path.join(__dirname, '../../media/karma.jpeg');
+    const imagePath = path.join(__dirname, '../../media/fear.jpeg');
 
     await conn.sendMessage(message.chat, {
         image: { url: imagePath },
@@ -71,6 +71,6 @@ function generateMenuText(prefix, userId, groupId) {
 ╰★───────────★╯
 
 ꒷꒦ ✦ ୧・︶ : ︶ ꒷꒦ ‧₊ ୧
-> © Powered by 𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲
+> © Powered by fear
 `.trim();
 }
