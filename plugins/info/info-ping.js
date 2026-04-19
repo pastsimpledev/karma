@@ -39,7 +39,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 
     await conn.sendMessage(m.chat, {
       text: message,
-      footer: `𝐏𝐢𝐧𝐠 ${nomebot}`,
+      footer: `𝐏𝐢𝐧𝐠 ${fear}`,
       buttons: [
         { buttonId: `${usedPrefix}ping`, buttonText: { displayText: "🔄 𝐏𝐢𝐧𝐠" }, type: 1 }
       ],
