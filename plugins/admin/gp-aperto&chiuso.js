@@ -1,47 +1,24 @@
- 
 let handler = async (m, { conn, command }) => {
-    const userId = m.sender;
-    const groupId = m.isGroup ? m.chat : null;
-    const nomeDelBot = global.db.data.nomedelbot || 'karma';
-    
-    let isOpen = /^(aperto|open|abrir|aberto|öffnen|开放|открыть|فتح|खोलना|ouvrir|buka|aç)$/i.test(command);
-    
-    await conn.groupSettingUpdate(m.chat, isOpen ? 'not_announcement' : 'announcement');
-    
+    let isOpen = command === 'aperto'
+    await conn.groupSettingUpdate(m.chat, isOpen ? 'not_announcement' : 'announcement')
     await conn.sendMessage(m.chat, {
-        text: isOpen ? global.t('groupOpen', userId, groupId) : global.t('groupClose', userId, groupId),
+        text: isOpen ? '𝐩𝐚𝐫𝐥𝐚𝐭𝐞 𝐩𝐥𝐞𝐛𝐞𝐢' : '𝐨𝐫𝐚 𝐩𝐚𝐫𝐥𝐚𝐧𝐨 𝐠𝐥𝐢 𝐢𝐝𝐞𝐢',
         contextInfo: {
-            forwardingScore: 999,
+            forwardingScore: 99,
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
-                newsletterJid: '120363259442839354@newsletter',
+                newsletterJid: '',
                 serverMessageId: '',
-                newsletterName: `${nomeDelBot}`
+                newsletterName: global.db.data.nomedelbot || `fear`
             }
         }
-    }, { quoted: m });
-};
+    }, { quoted: m })
+}
 
-handler.help = [
-  'open','close',
-  'aperto','chiuso',
-  'abrir','cerrar',
-  'aberto','fechado',
-  'öffnen','schließen',
-  '开放','关闭',
-  'открыть','закрыть',
-  'فتح','إغلاق',
-  'खोलना','बंद',
-  'ouvrir','fermer',
-  'buka','tutup',
-  'aç','kapat'
-];
-handler.tags = ['group'];
-handler.command = /^(aperto|chiuso|open|close|abrir|cerrar|aberto|fechado|öffnen|schließen|开放|关闭|открыть|закрыть|فتح|إغلاق|खोलना|बंद|ouvrir|fermer|buka|tutup|aç|kapat)$/i;
-handler.admin = true;
-handler.moderator = true;
-handler.botAdmin = true;
-handler.group = true;
+handler.help = ['aperto', 'chiuso']
+handler.tags = ['group']
+handler.command = /^(aperto|chiuso)$/i
+handler.admin = true
+handler.botAdmin = true
 
-export default handler;
-
+export default handler
