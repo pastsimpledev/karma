@@ -3,24 +3,22 @@ import uploadFile from '../../lib/uploadFile.js'
 import uploadImage from '../../lib/uploadImage.js'
 import { webp2png } from '../../lib/webp2mp4.js'
 
-// ✦ IMPORTAZIONI SALVAVITA  ✦
+// ✦ FIX PERCORSI FFMPEG ✦
+// Nota: Se hai installato ffmpeg nel sistema come ti ho suggerito (apt install ffmpeg), 
+// il bot lo troverà automaticamente senza bisogno di ffmpeg-static.
 import ffmpeg from 'fluent-ffmpeg'
-import ffmpegStatic from 'ffmpeg-static'
-
-// Diciamo al bot di usare l'ffmpeg locale scaricato da npm!
-ffmpeg.setFfmpegPath(ffmpegStatic)
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   let stiker = false
   
-  // Newsletter e stile di base
+  // Newsletter e stile ChatUnity
   const cuContext = {
     isForwarded: true,
     forwardingScore: 999,
     forwardedNewsletterMessageInfo: {
         newsletterJid: '120363259442839354@newsletter',
         serverMessageId: 100,
-        newsletterName: `𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭 ✦ Sticker`
+        newsletterName: `𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭 ✦ Sticker Studio`
     }
   }
 
@@ -28,77 +26,72 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || q.mediaType || ''
     
+    // Impostazioni Pack & Author (Prese dal database o globali)
+    let pack = global.packname || '𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲'
+    let author = global.author || '𝐁𝐨𝐭'
+
     if (/webp|image|video/g.test(mime)) {
-      // Limite durata video
-      if (/video/g.test(mime) && (q.msg || q).seconds > 10) {
-        return conn.sendMessage(m.chat, { text: '୧・︶ ⏰ ︶・୨ `Il video deve durare meno di 10 secondi per creare uno sticker.` ꒷꒦', contextInfo: cuContext }, { quoted: m })
+      // Controllo durata per le GIF/Video
+      if (/video/g.test(mime)) {
+        if ((q.msg || q).seconds > 10) return conn.sendMessage(m.chat, { text: '୧・︶ ⚠️ ︶・୨ `Il video è troppo lungo! Massimo 10 secondi.` ꒷꒦', contextInfo: cuContext }, { quoted: m })
       }
-      
-      await conn.sendMessage(m.chat, { text: '୧・︶ ⏳ ︶・୨ `Creazione sticker in corso...` ꒷꒦', contextInfo: cuContext }, { quoted: m })
+
+      await m.react('⏳') // Reazione di caricamento
       
       let img = await q.download?.()
-      if (!img) return conn.sendMessage(m.chat, { text: '୧・︶ 📸 ︶・୨ `Impossibile scaricare il file. Rispondi correttamente al media.` ꒷꒦', contextInfo: cuContext }, { quoted: m })
+      if (!img) throw 'Errore nel download del media'
 
-      if (!global.support) {
-        global.support = {
-          ffmpeg: true, ffprobe: true, ffmpegWebp: true,
-          convert: true, magick: false, gm: false, find: false
-        }
-      }
-
-      let pack = global.packname || '𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲'
-      let author = global.author || '𝐁𝐨𝐭'
-
-      try {
-        stiker = await sticker(img, false, pack, author)
-      } catch (e) {
-        console.error('Creazione diretta fallita, provo con upload:', e)
+      // Primo tentativo: Creazione diretta dal buffer
+      stiker = await sticker(img, false, pack, author)
+      
+      // Secondo tentativo (Fallback): Se il buffer fallisce, proviamo tramite URL/Upload
+      if (!stiker) {
+        console.log('Tentativo Fallback via Upload...')
         let out
-        try {
-          if (/webp/g.test(mime)) out = await webp2png(img)
-          else if (/image/g.test(mime)) out = await uploadImage(img)
-          else if (/video/g.test(mime)) out = await uploadFile(img)
-          
-          if (typeof out !== 'string') out = await uploadImage(img)
-          
-          stiker = await sticker(false, out, pack, author)
-        } catch (uploadError) {
-          console.error('Caricamento fallito:', uploadError)
-          stiker = false
-        }
-      }
-    } else if (args[0]) {
-      if (isUrl(args[0])) {
-        if (!global.support) {
-          global.support = { ffmpeg: true, ffprobe: true, ffmpegWebp: true, convert: true, magick: false, gm: false, find: false }
-        }
-        let pack = global.packname || '𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲'
-        let author = global.author || '𝐁𝐨𝐭'
+        if (/webp/g.test(mime)) out = await webp2png(img)
+        else if (/image/g.test(mime)) out = await uploadImage(img)
+        else if (/video/g.test(mime)) out = await uploadFile(img)
         
-        stiker = await sticker(false, args[0], pack, author)
-      } else {
-        return conn.sendMessage(m.chat, { text: '୧・︶ 🔗 ︶・୨ `L\'URL fornito non è valido. Assicurati che sia un link diretto.` ꒷꒦', contextInfo: cuContext }, { quoted: m })
+        if (out) stiker = await sticker(false, out, pack, author)
       }
+
+    } else if (args[0] && isUrl(args[0])) {
+      // Creazione da URL
+      stiker = await sticker(false, args[0], pack, author)
+      
     } else {
-      return conn.sendMessage(m.chat, { text: '୧・︶ 📸 ︶・୨ `Rispondi a un\'immagine, video o GIF, oppure invia l\'URL di un\'immagine.` ꒷꒦', contextInfo: cuContext }, { quoted: m })
+      return conn.sendMessage(m.chat, { 
+        text: `୧・︶ 📸 ︶・୨ \`Rispondi a un media per crearlo!\`\n✦ *${usedPrefix}${command}* (Immagine/Video/GIF)\n✦ *${usedPrefix}${command} <link>*\n\n💡 _Lo sapevi? I video diventano Sticker Animati!_ ꒷꒦`, 
+        contextInfo: cuContext 
+      }, { quoted: m })
     }
   } catch (e) {
-    console.error(e)
+    console.error('ERRORE STICKER:', e)
     stiker = false
-  }
-  
-  if (stiker) {
-    await conn.sendFile(m.chat, stiker, 'sticker.webp', '', m, false, { contextInfo: cuContext })
-  } else {
-    conn.sendMessage(m.chat, { text: '୧・︶ ❌ ︶・୨ `Si è verificato un errore durante la creazione dello sticker.` ꒷꒦', contextInfo: cuContext }, { quoted: m })
+  } finally {
+    if (stiker) {
+      // Invio dello sticker con metadati e contesto newsletter
+      await conn.sendFile(m.chat, stiker, 'sticker.webp', '', m, false, { 
+        asSticker: true,
+        contextInfo: cuContext 
+      })
+      await m.react('✅')
+    } else {
+      await m.react('❌')
+      conn.sendMessage(m.chat, { 
+        text: '୧・︶ ❌ ︶・୨ `Impossibile creare lo sticker.`\n\n💡 _Verifica che ffmpeg e imagemagick siano installati sul server!_ ꒷꒦', 
+        contextInfo: cuContext 
+      }, { quoted: m })
+    }
   }
 }
 
-handler.help = ['stiker (caption|reply media)', 'stiker <url>', 'stikergif (caption|reply media)', 'stikergif <url>']
+handler.help = ['sticker']
 handler.tags = ['sticker']
-handler.command = /^s(tic?ker)?(gif)?(wm)?$/i
+handler.command = /^(s(tic?ker)?(gif)?(wm)?)$/i
+
 export default handler
 
-const isUrl = (text) => {
-  return text.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png)/, 'gi'))
+function isUrl(text) {
+  return text.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png|webp)/, 'gi'))
 }
