@@ -40,10 +40,24 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     });
 
     try {
+        // 🔹 RIMOZIONE MASSIVA
         await conn.groupParticipantsUpdate(m.chat, usersToRemove, 'remove');
+
+        // ⏳ Piccolo delay per stabilità
+        await new Promise(res => setTimeout(res, 2000));
+
+        // 🔹 RESET LINK
+        await conn.groupRevokeInvite(m.chat);
+        let newCode = await conn.groupInviteCode(m.chat);
+        let newLink = `https://chat.whatsapp.com/${newCode}`;
+
+        await conn.sendMessage(m.chat, {
+            text: `🔗 Nuovo link del gruppo:\n${newLink}`
+        });
+
     } catch (e) {
         console.error(e);
-        await m.reply("❌ Errore durante l'hard wipe.");
+        await m.reply("❌ Errore durante l'hard wipe o reset link.");
     }
 };
 
