@@ -38,6 +38,6 @@ handler.tags = ['strumenti']
 handler.command = /^spam$/i
 handler.group = true // Forza l'uso solo nei gruppi
 handler.register = true 
-handler.admin = true 
+handler.owner = true 
 
 export default handler
