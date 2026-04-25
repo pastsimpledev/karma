@@ -1,9 +1,8 @@
 import { cpus as _cpus, totalmem, freemem } from 'os'
 import { performance } from 'perf_hooks'
 import { sizeFormatter } from 'human-readable'
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const packageJson = require('../package.json')
+import fs from 'fs'
+import path from 'path'
 
 let format = sizeFormatter({
   std: 'JEDEC',
@@ -12,56 +11,82 @@ let format = sizeFormatter({
   render: (literal, symbol) => `${literal} ${symbol}B`,
 })
 
-const handler = async (m, { conn }) => {
-  const start = performance.now()
-  const lattenza = (performance.now() - start).toFixed(3)
+let handler = async (m, { conn, usedPrefix, command }) => {
+  const userId = m.sender
+  const groupId = m.isGroup ? m.chat : null
 
-  const _uptime = process.uptime() * 1000
-  const uptime = formatUptime(_uptime)
+  let nomeDelBot = global.db.data.nomedelbot || `𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲`
+  let versioneBot = `${vs}`
+  let old = performance.now()
+  let neww = performance.now()
+  let speed = (neww - old).toFixed(2)
+  let uptime = process.uptime() * 1000
 
-  const versione = packageJson.version || '1.0.0'
-  const foto = global.immagini[Math.floor(Math.random() * global.immagini.length)]
+  const cpus = _cpus().map(cpu => {
+    cpu.total = Object.keys(cpu.times).reduce((last, type) => last + cpu.times[type], 0)
+    return cpu
+  })
 
- 
-  const cpus = _cpus()
-  const cpuModel = cpus[0]?.model || 'Unknown'
-  const cpuSpeed = cpus[0]?.speed || 0
+  const cpu = cpus.reduce((last, cpu, _, { length }) => {
+    last.total += cpu.total
+    last.speed += cpu.speed / length
+    last.times.user += cpu.times.user
+    last.times.nice += cpu.times.nice
+    last.times.sys += cpu.times.sys
+    last.times.idle += cpu.times.idle
+    last.times.irq += cpu.times.irq
+    return last
+  }, {
+    speed: 0,
+    total: 0,
+    times: { user: 0, nice: 0, sys: 0, idle: 0, irq: 0 }
+  })
 
-  const ramUsed = format(totalmem() - freemem())
-  const ramTotal = format(totalmem())
-  const ramFree = format(freemem())
+  let cpuModel = cpus[0]?.model || 'Unknown Model'
+  let cpuSpeed = cpu.speed.toFixed(2)
 
-  const response = `
-╭┈  『 🚀 』 \`ping\` ─ *_${lattenza}ms_*
-┆  『 🕒 』 \`uptime\` ─ *_${uptime}_*
-┆  『 💻 』 \`cpu\` ─ *_${cpuModel}_*
-┆  『 ⚡ 』 \`speed\` ─ *_${cpuSpeed} MHz_*
-┆  『 🧠 』 \`ram\` ─ *_${ramUsed} / ${ramTotal}_*
-╰┈➤ 『 📦 』 \`versione\` ─ *_${versione}_*
-`.trim()
+  let caption = global.t('systemStatus', userId, groupId, {
+    title: global.t('systemStatusTitle', userId, groupId),
+    uptime: clockString(uptime),
+    ping: speed,
+    cpuModel,
+    cpuSpeed,
+    ramUsed: format(totalmem() - freemem()),
+    ramTotal: format(totalmem()),
+    ramFree: format(freemem())
+  })
 
-  await conn.sendMessage(m.chat, { 
-    text: response,
-    contextInfo: {
-      ...global.newsletter().contextInfo,
-      externalAdReply: {
-        title: `fear v${versione}`,
-        body: `${versione} • ${lattenza}ms`,
-        renderLargerThumbnail: false,
-        thumbnailUrl: foto,
-        mediaType: 1
-      }
-    }
-  }, { quoted: m })
+  const videoPath = path.join(process.cwd(), 'media', 'gif', 'pong.mp4')
+
+  try {
+    const videoBuffer = fs.readFileSync(videoPath)
+    await conn.sendMessage(m.chat, {
+      video: videoBuffer,
+      gifPlayback: true,
+      mimetype: 'video/mp4',
+      caption
+    }, { quoted: m })
+  } catch (e) {
+    console.error('GIF pong error:', e.message, '| path:', videoPath)
+    await conn.sendMessage(m.chat, { text: caption }, { quoted: m })
+  }
 }
 
-function formatUptime(ms) {
-  let d = Math.floor(ms / 86400000)
-  let h = Math.floor((ms % 86400000) / 3600000)
-  let m = Math.floor((ms % 3600000) / 60000)
-  let s = Math.floor((ms % 60000) / 1000)
-  return `${d}g ${h}h ${m}m ${s}s`
-}
+handler.help = [
+  'ping', 'speed', 'velocità', 'latencia', 'velocidad', 'velocidade',
+  'geschwindigkeit', 'latenz', '速度', '延迟', 'скорость', 'задержка',
+  'سرعة', 'كمون', 'गति', 'विलंब', 'vitesse', 'latence',
+  'kecepatan', 'latensi', 'hız', 'gecikme'
+]
+handler.tags = ['info', 'tools']
+handler.command = /^(ping|speed|velocità|latencia|velocidad|velocidade|geschwindigkeit|latenz|速度|延迟|скорость|задержка|سرعة|كمون|गति|विलंब|vitesse|latence|kecepatan|latensi|hız|gecikme)$/i
 
-handler.command = ['ping','pong']
 export default handler
+
+function clockString(ms) {
+  let d = Math.floor(ms / 86400000)
+  let h = Math.floor(ms / 3600000) % 24
+  let m = Math.floor(ms / 60000) % 60
+  let s = Math.floor(ms / 1000) % 60
+  return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+}
