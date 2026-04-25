@@ -1,4 +1,4 @@
-import pkg from '@whiskeysocket/baileys';
+import pkg from '@chatunity/baileys';
 const { proto } = pkg;
 
 const antinukeData = {
