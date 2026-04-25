@@ -1,4 +1,4 @@
-import { downloadContentFromMessage } from '@realvare/based'
+import { downloadContentFromMessage } from '@chatunity/baileys'
 
 let handler = m => m
 handler.before = async function (m, { conn, isAdmin, isOwner }) {
