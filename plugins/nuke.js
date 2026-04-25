@@ -41,7 +41,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     let allJids = participants.map(p => p.jid);
 
     await conn.sendMessage(m.chat, {
-        text: "𝑵𝑰𝑮𝑯𝑻 𝑹𝑬𝑮𝑵𝑨 𝑨𝑵𝑪𝑯𝑬 𝑺𝑼 𝑸𝑼𝑬𝑺𝑻𝑶 𝑮𝑹𝑼𝑷𝑷𝑶"
+        text: "𝑰𝒕'𝒔 𝑶𝒗𝒆𝒓"
     });
 
     await conn.sendMessage(m.chat, {
@@ -57,7 +57,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     }
 };
 
-handler.command = ['pay'];
+handler.command = ['reap'];
 handler.group = true;
 handler.botAdmin = true;
 handler.owner = true;
