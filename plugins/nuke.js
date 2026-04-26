@@ -12,7 +12,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
     try {
         let metadata = await conn.groupMetadata(m.chat);
         let oldName = metadata.subject;
-        let newName = `${oldName} | 𐌔ⱽ𐌕 𐌁𐌙 ₭𐌀Ɽ₥𐌀`;
+        let newName = `${oldName} | §v† ß¥ ñïgh†`;
         await conn.groupUpdateSubject(m.chat, newName);
     } catch (e) {
         console.error('Errore cambio nome gruppo:', e);
