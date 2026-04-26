@@ -9,19 +9,19 @@ import moment from 'moment-timezone';
 
 global.botnumber = '';
 global.confirmCode = '';
-global.nomebot = 'karma';
-global.packname = 'karma';
+global.nomebot = '𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭';
+global.packname = '𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭';
 global.author = '𝐌𝐝';
-global.vs = 'X';
+global.vs = '11';
 global.collab = 'Demo';
 global.wm = global.nomebot;
 global.wait = 'ⓘ 𝐂𝐚𝐫𝐢𝐜𝐚𝐦𝐞𝐧𝐭𝐨 ...';
 
 
 global.owner = [
-  ['393455383567', 'ʍɛօա', true],
-  ['', 'xxxx', true], // Numero, Nome, True (attenzione alla sintassi deve essere identico a sopra!)
-  ['‎‪15795505914‬', '', true],
+  ['15795505914', 'night', true],
+  ['xxxxxxxxxx'], // Numero, Nome, True (attenzione alla sintassi deve essere identico a sopra!)
+  ['xxxxxxxxxx'],
   ['xxxxxxxxxx'],
   ['xxxxxxxxxx'],
   ['xxxxxxxxxx']
