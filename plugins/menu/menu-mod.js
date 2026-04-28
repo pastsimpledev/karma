@@ -71,6 +71,6 @@ function generateMenuText(prefix, userId, groupId) {
 ╰★───────────★╯
 
 ꒷꒦ ✦ ୧・︶ : ︶ ꒷꒦ ‧₊ ୧
-> © Powered by lokka
+> © Powered by 6lokka
 `.trim();
 }
