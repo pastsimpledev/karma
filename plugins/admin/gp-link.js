@@ -8,7 +8,7 @@
     }
     const metadata = await conn.groupMetadata(m.chat);
     const inviteCode = await conn.groupInviteCode(m.chat);
-    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || 'karma';
+    const nomeDelBot = conn.user?.name || global.db?.data?.nomedelbot || '6lokka';
     await conn.sendMessage(m.chat, {
         text: global.t('linkgroupLinkTitle', userId, groupId, { groupName: metadata.subject }),
         footer: global.t('linkgroupLinkFooter', userId, groupId),
