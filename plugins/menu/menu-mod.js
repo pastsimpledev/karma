@@ -71,6 +71,6 @@ function generateMenuText(prefix, userId, groupId) {
 ╰★───────────★╯
 
 ꒷꒦ ✦ ୧・︶ : ︶ ꒷꒦ ‧₊ ୧
-> © Powered by fear
+> © Powered by lokka
 `.trim();
 }
