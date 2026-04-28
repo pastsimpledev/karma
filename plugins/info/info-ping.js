@@ -15,7 +15,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
   const userId = m.sender
   const groupId = m.isGroup ? m.chat : null
 
-  let nomeDelBot = global.db.data.nomedelbot || `𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲`
+  let nomeDelBot = global.db.data.nomedelbot || `6lokka`
   let versioneBot = `${vs}`
   let old = performance.now()
   let neww = performance.now()
