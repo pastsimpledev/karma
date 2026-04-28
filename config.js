@@ -9,8 +9,8 @@ import moment from 'moment-timezone';
 
 global.botnumber = '';
 global.confirmCode = '';
-global.nomebot = '𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭';
-global.packname = '𝐂𝐡𝐚𝐭𝐔𝐧𝐢𝐭𝐲-𝐁𝐨𝐭';
+global.nomebot = '6lokka';
+global.packname = '6lokka';
 global.author = '𝐌𝐝';
 global.vs = '11';
 global.collab = 'Demo';
